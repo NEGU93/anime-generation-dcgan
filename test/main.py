@@ -11,6 +11,9 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten, Reshape, InputLayer
 from keras.regularizers import L1L2
 
+from keras_adversarial import AdversarialModel, simple_gan, gan_targets
+from keras_adversarial import AdversarialOptimizerSimultaneous, normal_latent_sampling
+
 # to stop potential randomness
 seed = 128
 rng = np.random.RandomState(seed)
@@ -77,9 +80,6 @@ model_2 = Sequential([
 
     Dense(units=d_output_num_units, activation='sigmoid', kernel_regularizer=L1L2(1e-5, 1e-5)),
 ])
-
-from keras_adversarial import AdversarialModel, simple_gan, gan_targets
-from keras_adversarial import AdversarialOptimizerSimultaneous, normal_latent_sampling
 
 gan = simple_gan(model_1, model_2, normal_latent_sampling((100,)))
 model = AdversarialModel(base_model=gan,player_params=[model_1.trainable_weights, model_2.trainable_weights])
