@@ -3,10 +3,8 @@ import os
 import numpy as np
 import pandas as pd
 from scipy.misc import imread
-import pylab
-import matplotlib as plt
+import pylab as plt
 
-import keras
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, Reshape, InputLayer
 from keras.regularizers import L1L2
@@ -20,8 +18,8 @@ rng = np.random.RandomState(seed)
 
 # set path
 root_dir = os.path.abspath('.')
-data_dir = os.path.join(root_dir, 'Data')
-
+data_dir = os.path.join(root_dir, 'data')
+# import pdb; pdb.set_trace()
 # load data
 train = pd.read_csv(os.path.join(data_dir, 'Train', 'train.csv'))
 test = pd.read_csv(os.path.join(data_dir, 'test.csv'))
@@ -43,9 +41,9 @@ filepath = os.path.join(data_dir, 'Train', 'Images', 'train', img_name)
 
 img = imread(filepath, flatten=True)
 
-pylab.imshow(img, cmap='gray')
-pylab.axis('off')
-pylab.show()
+plt.imshow(img, cmap='gray')
+plt.axis('off')
+plt.show()
 
 # define vars
 g_input_shape = 100
@@ -82,8 +80,9 @@ model_2 = Sequential([
 ])
 
 gan = simple_gan(model_1, model_2, normal_latent_sampling((100,)))
-model = AdversarialModel(base_model=gan,player_params=[model_1.trainable_weights, model_2.trainable_weights])
-model.adversarial_compile(adversarial_optimizer=AdversarialOptimizerSimultaneous(), player_optimizers=['adam', 'adam'], loss='binary_crossentropy')
+model = AdversarialModel(base_model=gan, player_params=[model_1.trainable_weights, model_2.trainable_weights])
+model.adversarial_compile(adversarial_optimizer=AdversarialOptimizerSimultaneous(), player_optimizers=['adam', 'adam'],
+                          loss='binary_crossentropy')
 
 history = model.fit(x=train_x, y=gan_targets(train_x.shape[0]), epochs=10, batch_size=batch_size)
 
