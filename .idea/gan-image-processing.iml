@@ -4,6 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/Simple-GAN-MNIST" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/Pokemon_GAN" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/Generative-Adversarial-Network-Tutorial" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/Generative-Adversarial-Network-Demo" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
