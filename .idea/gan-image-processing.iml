@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/test/Pokemon_GAN" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/Generative-Adversarial-Network-Tutorial" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/Generative-Adversarial-Network-Demo" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/DCGAN-tensorflow" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
