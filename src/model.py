@@ -73,8 +73,7 @@ class DCGAN(object):
         self.checkpoint_dir = checkpoint_dir
         self.data_dir = data_dir
 
-        data_path = os.path.join(self.data_dir, self.dataset_name, self.input_fname_pattern)
-        # import pdb; pdb.set_trace()
+        data_path = os.path.join(self.data_dir, self.dataset_name, self.input_fname_pattern).replace("\\", "/")
         self.data = glob(data_path)
         if len(self.data) == 0:
             raise Exception("[!] No data found in '" + data_path + "'")
@@ -103,13 +102,11 @@ class DCGAN(object):
         else:
             image_dims = [self.input_height, self.input_width, self.c_dim]
 
-        self.inputs = tf.placeholder(
-            tf.float32, [self.batch_size] + image_dims, name='real_images')
+        self.inputs = tf.placeholder(tf.float32, [self.batch_size] + image_dims, name='real_images')
 
         inputs = self.inputs
 
-        self.z = tf.placeholder(
-            tf.float32, [None, self.z_dim], name='z')
+        self.z = tf.placeholder(tf.float32, [None, self.z_dim], name='z')
         self.z_sum = histogram_summary("z", self.z)
 
         self.G = self.generator(self.z, self.y)
@@ -153,9 +150,9 @@ class DCGAN(object):
         d_optim = tf.train.AdamOptimizer(learning_rate, beta1=beta1).minimize(self.d_loss, var_list=self.d_vars)
         g_optim = tf.train.AdamOptimizer(learning_rate, beta1=beta1).minimize(self.g_loss, var_list=self.g_vars)
         try:
-            tf.global_variables_initializer().run()
+            tf.global_variables_initializer().run(session=self.sess)
         except:
-            tf.initialize_all_variables().run()
+            tf.initialize_all_variables().run(session=self.sess)
 
         self.g_sum = merge_summary([self.z_sum, self.d__sum, self.G_sum, self.d_loss_fake_sum, self.g_loss_sum])
         self.d_sum = merge_summary([self.z_sum, self.d_sum, self.d_loss_real_sum, self.d_loss_sum])

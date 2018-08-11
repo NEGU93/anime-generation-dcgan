@@ -6,7 +6,7 @@ import os
 
 def main(_):
     # Define Variables
-    train = True
+    train = False
     epoch = 25
     learning_rate = 0.0002
     beta1 = 0.5
@@ -15,19 +15,19 @@ def main(_):
     run_config = tf.ConfigProto()
     run_config.gpu_options.allow_growth = True
     sess = tf.Session(config=run_config)
-    input_width = 108               # The size of image to use (will be center cropped). [108]
-    input_height = 108              # The size of image to use (will be center cropped). [108]
+    input_width = 64                # The size of image to use (will be center cropped). [108]
+    input_height = 64               # The size of image to use (will be center cropped). [108]
     output_width = 64               # The size of the output images to produce [64]
     output_height = 64              # The size of the output images to produce [64]
     batch_size = 64                 # The size of batch images [64]
     sample_num = batch_size
     generate_test_images = 100      # Number of images to generate during test. [100]
-    dataset = "celebA"              # "anime-faces"         # Name of the dataset
+    dataset = "smile"               # "anime-faces"         # Name of the dataset
     input_frame_pattern = "*.jpg"   # Glob pattern of filename of input images [*]
-    crop = True                     # TODO: ver cómo poner esto
+    crop = False                    # TODO: bug, no anda bien. Si no pones input mismo size que output no anda
     checkpoint_dir = "checkpoint"   # Directory name to save the checkpoints [checkpoint]
     sample_dir = "samples"          # Directory name to save the image samples [samples]
-    data_dir = "./data"             # Root directory of dataset [data]
+    data_dir = "../data"            # Root directory of dataset [data]
 
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
