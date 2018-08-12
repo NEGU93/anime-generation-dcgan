@@ -157,7 +157,7 @@ class DCGAN(object):
         self.writer = SummaryWriter("../logs", self.sess.graph)
 
         sample_z = np.random.uniform(-1, 1, size=(self.sample_num, self.z_dim))     # Genera el ruido de entrada
-        # TODO: cambiar por otra distr
+        # TODO: cambiar por otra distribucion
 
         sample_files = self.data[0:self.sample_num]     # Toma la cantidad de imágenes acorde al batch_size
         sample = [
@@ -222,18 +222,15 @@ class DCGAN(object):
                 errG = self.g_loss.eval({self.z: batch_z})
 
                 counter += 1
-                print("Epoch: [%2d/%2d] [%4d/%4d] time: %4.4f, d_loss: %.8f, g_loss: %.8f" \
+                print("Epoch: [%2d/%2d] [%4d/%4d] time: %4.4f, d_loss: %.8f, g_loss: %.8f"
                       % (epoch, config.epoch, idx, batch_idxs, time.time() - start_time, errD_fake + errD_real, errG))
 
                 if np.mod(counter, 100) == 1:
                     try:
-                        samples, d_loss, g_loss = self.sess.run(
-                            [self.sampler, self.d_loss, self.g_loss],
-                            feed_dict={
-                                    self.z: sample_z,
-                                    self.inputs: sample_inputs,
-                                },
-                        )
+                        samples, d_loss, g_loss = self.sess.run([self.sampler, self.d_loss, self.g_loss],
+                                                                feed_dict={self.z: sample_z,
+                                                                           self.inputs: sample_inputs, },
+                                                                )
                         save_images(samples, image_manifold_size(samples.shape[0]),
                                     './{}/train_{:02d}_{:04d}.png'.format(config.sample_dir, epoch, idx))
                         print("[Sample] d_loss: %.8f, g_loss: %.8f" % (d_loss, g_loss))
