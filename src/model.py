@@ -156,9 +156,10 @@ class DCGAN(object):
         self.d_sum = merge_summary([self.z_sum, self.d_sum, self.d_loss_real_sum, self.d_loss_sum])
         self.writer = SummaryWriter("../logs", self.sess.graph)
 
-        sample_z = np.random.uniform(-1, 1, size=(self.sample_num, self.z_dim))
+        sample_z = np.random.uniform(-1, 1, size=(self.sample_num, self.z_dim))     # Genera el ruido de entrada
+        # TODO: cambiar por otra distr
 
-        sample_files = self.data[0:self.sample_num]
+        sample_files = self.data[0:self.sample_num]     # Toma la cantidad de imágenes acorde al batch_size
         sample = [
                 get_image(sample_file,
                           input_height=self.input_height,
@@ -167,7 +168,7 @@ class DCGAN(object):
                           resize_width=self.output_width,
                           crop=self.crop,
                           grayscale=self.grayscale) for sample_file in sample_files]
-        if (self.grayscale):
+        if self.grayscale:
             sample_inputs = np.array(sample).astype(np.float32)[:, :, :, None]
         else:
             sample_inputs = np.array(sample).astype(np.float32)
@@ -182,8 +183,7 @@ class DCGAN(object):
             print(" [!] Load failed...")
 
         for epoch in xrange(config.epoch):
-            self.data = glob(os.path.join(
-                config.data_dir, config.dataset, self.input_fname_pattern))
+            self.data = glob(os.path.join(config.data_dir, config.dataset, self.input_fname_pattern))
             np.random.shuffle(self.data)
             batch_idxs = min(len(self.data), config.train_size) // config.batch_size
 
@@ -202,22 +202,19 @@ class DCGAN(object):
                 else:
                     batch_images = np.array(batch).astype(np.float32)
 
-                batch_z = np.random.uniform(-1, 1, [config.batch_size, self.z_dim]) \
-                    .astype(np.float32)
+                batch_z = np.random.uniform(-1, 1, [config.batch_size, self.z_dim]).astype(np.float32)
 
                 # Update D network
                 _, summary_str = self.sess.run([d_optim, self.d_sum],
-                                                   feed_dict={self.inputs: batch_images, self.z: batch_z})
+                                               feed_dict={self.inputs: batch_images, self.z: batch_z})
                 self.writer.add_summary(summary_str, counter)
 
                 # Update G network
-                _, summary_str = self.sess.run([g_optim, self.g_sum],
-                                                   feed_dict={self.z: batch_z})
+                _, summary_str = self.sess.run([g_optim, self.g_sum], feed_dict={self.z: batch_z})
                 self.writer.add_summary(summary_str, counter)
 
                 # Run g_optim twice to make sure that d_loss does not go to zero (different from paper)
-                _, summary_str = self.sess.run([g_optim, self.g_sum],
-                                                   feed_dict={self.z: batch_z})
+                _, summary_str = self.sess.run([g_optim, self.g_sum], feed_dict={self.z: batch_z})
                 self.writer.add_summary(summary_str, counter)
 
                 errD_fake = self.d_loss_fake.eval({self.z: batch_z})
