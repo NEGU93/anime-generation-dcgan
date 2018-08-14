@@ -189,7 +189,7 @@ def visualize(sess, dcgan, config, option):
         z_sample = np.random.uniform(-0.5, 0.5, size=(config.batch_size, dcgan.z_dim))
         samples = sess.run(dcgan.sampler, feed_dict={dcgan.z: z_sample})
         save_images(samples, [image_frame_dim, image_frame_dim],
-                    './samples/test_%s.png' % strftime("%Y-%m-%d-%H-%M-%S", gmtime()))
+                    '../samples/test_%s.png' % strftime("%Y-%m-%d-%H-%M-%S", gmtime()))
     elif option == 1:
         values = np.arange(0, 1, 1. / config.batch_size)
         for idx in xrange(dcgan.z_dim):
@@ -207,7 +207,7 @@ def visualize(sess, dcgan, config, option):
             else:
                 samples = sess.run(dcgan.sampler, feed_dict={dcgan.z: z_sample})
 
-            save_images(samples, [image_frame_dim, image_frame_dim], './samples/test_arange_%s.png' % (idx))
+            save_images(samples, [image_frame_dim, image_frame_dim], '../samples/test_arange_%s.png' % (idx))
     elif option == 2:
         values = np.arange(0, 1, 1. / config.batch_size)
         for idx in [random.randint(0, dcgan.z_dim - 1) for _ in xrange(dcgan.z_dim)]:
@@ -228,10 +228,10 @@ def visualize(sess, dcgan, config, option):
                 samples = sess.run(dcgan.sampler, feed_dict={dcgan.z: z_sample})
 
             try:
-                make_gif(samples, './samples/test_gif_%s.gif' % (idx))
+                make_gif(samples, '../samples/test_gif_%s.gif' % (idx))
             except:
                 save_images(samples, [image_frame_dim, image_frame_dim],
-                            './samples/test_%s.png' % strftime("%Y-%m-%d-%H-%M-%S", gmtime()))
+                            '../samples/test_%s.png' % strftime("%Y-%m-%d-%H-%M-%S", gmtime()))
     elif option == 3:
         values = np.arange(0, 1, 1. / config.batch_size)
         for idx in xrange(dcgan.z_dim):
@@ -241,7 +241,7 @@ def visualize(sess, dcgan, config, option):
                 z[idx] = values[kdx]
 
             samples = sess.run(dcgan.sampler, feed_dict={dcgan.z: z_sample})
-            make_gif(samples, './samples/test_gif_%s.gif' % (idx))
+            make_gif(samples, '../samples/test_gif_%s.gif' % (idx))
     elif option == 4:
         image_set = []
         values = np.arange(0, 1, 1. / config.batch_size)
@@ -252,11 +252,11 @@ def visualize(sess, dcgan, config, option):
             for kdx, z in enumerate(z_sample): z[idx] = values[kdx]
 
             image_set.append(sess.run(dcgan.sampler, feed_dict={dcgan.z: z_sample}))
-            make_gif(image_set[-1], './samples/test_gif_%s.gif' % (idx))
+            make_gif(image_set[-1], '../samples/test_gif_%s.gif' % (idx))
 
         new_image_set = [merge(np.array([images[idx] for images in image_set]), [10, 10]) \
                          for idx in range(64) + range(63, -1, -1)]
-        make_gif(new_image_set, './samples/test_gif_merged.gif', duration=8)
+        make_gif(new_image_set, '../samples/test_gif_merged.gif', duration=8)
 
 
 def image_manifold_size(num_images):
