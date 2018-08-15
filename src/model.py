@@ -72,7 +72,7 @@ class DCGAN(object):
         self.checkpoint_dir = checkpoint_dir
         self.data_dir = data_dir
 
-        data_path = os.path.join(self.data_dir, self.dataset_name, self.input_fname_pattern)
+        data_path = os.path.join(self.data_dir, self.dataset_name, self.input_fname_pattern).replace("\\", "/")
         self.data = glob(data_path)
         if len(self.data) == 0:
             raise Exception("[!] No data found in '" + data_path + "'")
@@ -214,8 +214,8 @@ class DCGAN(object):
                 self.writer.add_summary(summary_str, counter)
 
                 # Run g_optim twice to make sure that d_loss does not go to zero (different from paper)
-                # _, summary_str = self.sess.run([g_optim, self.g_sum], feed_dict={self.z: batch_z})
-                # self.writer.add_summary(summary_str, counter)
+                _, summary_str = self.sess.run([g_optim, self.g_sum], feed_dict={self.z: batch_z})
+                self.writer.add_summary(summary_str, counter)
 
                 errD_fake = self.d_loss_fake.eval({self.z: batch_z})
                 errD_real = self.d_loss_real.eval({self.inputs: batch_images})
