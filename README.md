@@ -274,7 +274,7 @@ No solo utilizan una base de datos más homogenea sino que luego revisan todos l
     <td> <img src="img/dataset/danbooru_901019_ed9e65500490e35ea9d892eb6a998ffb.png" alt="Drawing" /> </td>
     <td> <img src="img/dataset/danbooru_853258_6a2fae7e35d57e53db563434a1c550d1.png" alt="Drawing" /> </td>
     <td> <img src="img/dataset/danbooru_843704_8c4e83901fa17a685541fd67e218f2b0.png" alt="Drawing" /> </td>
-    
+   
     <td> <img src="img/dataset/danbooru_836273_d6147d08cf5521d625e729d93715b0fe.png" alt="Drawing" /> </td>
     <td> <img src="img/dataset/danbooru_486418_f991370eb8779ed66e1aa8d5f0996395.jpg" alt="Drawing" /> </td>
     <td> <img src="img/dataset/danbooru_454550_a81283d43c096498fdda8b332831a1b9.jpg" alt="Drawing" /> </td>
@@ -282,9 +282,9 @@ No solo utilizan una base de datos más homogenea sino que luego revisan todos l
     <td> <img src="img/dataset/danbooru_444173_0066c72cc0066531084a288e1a4e45a7.jpg" alt="Drawing" /> </td>
     <td> <img src="img/dataset/danbooru_440907_0b1a026392412dcfddab3871cb412bff.jpg" alt="Drawing" /> </td>
     <td> <img src="img/dataset/danbooru_564654_5133896875a2d5952d035c573af0afb3.png" alt="Drawing" /> </td>
-    </tr>
+</tr>
     
-    ## Bibliografía:
+## Bibliografía:
 
 #### [3] Towards the Automatic Anime Characters Creation with Generative Adversarial Networks
 
